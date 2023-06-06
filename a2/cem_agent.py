@@ -102,7 +102,11 @@ class CEMAgent(base_agent.BaseAgent):
         param_size = self._param_mean.shape[0]
 
         # placeholder
-        candidates = torch.zeros([n, param_size], device=self._device)
+        #candidates = torch.zeros([n, param_size], device=self._device)
+        pmean, pstd = self._param_mean, self._param_std
+        pmean, pstd = pmean[None, :].tile(n, 1), pstd[None, :].tile(n, 1)
+        candidates = torch.normal(pmean, pstd)
+
 
         return candidates
 
@@ -120,6 +124,12 @@ class CEMAgent(base_agent.BaseAgent):
         # placeholder
         rets = np.zeros(n)
         ep_lens = np.zeros(n)
+        for i in range(n):
+            torch.nn.utils.vector_to_parameters(candidates[i], self._model.parameters())
+            test_info = self._rollout_test(num_episodes = self._eps_per_candidate)
+            rets[i] = test_info["mean_return"]
+            ep_lens[i] = test_info["mean_ep_len"]
+
 
         return rets, ep_lens
 
@@ -135,5 +145,10 @@ class CEMAgent(base_agent.BaseAgent):
         # placeholder
         new_mean = torch.zeros(param_size, device=self._device)
         new_std = torch.ones(param_size, device=self._device)
+        top_k = int(self._elite_ratio * len(rets))
+        top_k_idx = np.argsort(rets)[-top_k:]
+        top_k_params = params[top_k_idx]
+        new_mean = torch.mean(top_k_params, dim=0)
+        new_std = torch.std(top_k_params, dim=0)
 
         return new_mean, new_std
