@@ -1,7 +1,7 @@
 agent_name: "PG"
 
 model:
-  actor_net: "fc_2layers_1024units"
+  actor_net: "fc_2layers_128units"
   actor_init_output_scale: 0.01
   actor_std_type: "FIXED"
   action_std: 0.2
@@ -16,8 +16,8 @@ test_episodes: 32
 critic_update_epoch: 5
 
 # optimizer parameters
-actor_learning_rate: 2e-3
-critic_learning_rate: 2e-3
+actor_learning_rate: 1e-4
+critic_learning_rate: 1e-4
 
 batch_size: 512
 norm_adv_clip: 4.0

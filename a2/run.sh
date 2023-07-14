@@ -5,4 +5,4 @@ python run.py --mode train \
 --out_model_file output/model.pt \
 --max_samples 100000000 \
 --device 'cpu' \
-# --device 'cuda:4' \
+# --device 'cuda:4' \ 

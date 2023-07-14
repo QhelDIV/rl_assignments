@@ -21,4 +21,4 @@ critic_learning_rate: 2e-3
 
 batch_size: 512
 norm_adv_clip: 4.0
-action_bound_weight: 10.0
+action_bound_weight: 10.0q

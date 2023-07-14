@@ -1,7 +1,7 @@
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-from functools import reduce
+from functools import reduce 
 
 import sys
 sys.path.append(os.getcwd())
@@ -100,4 +100,5 @@ plt.legend()
 plt.title(plot_title)
 plt.tight_layout()
 
-plt.show()
+#plt.show()
+plt.savefig("cheetah_cem_curve.png")

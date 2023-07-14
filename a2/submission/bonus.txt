@@ -1,0 +1,2 @@
+I managed to use a straight single for loop for reward-to-go calculation.
+Also, I use the fc_2layers_1024units model for stronger model capacity. This leads to better performance (>500).
